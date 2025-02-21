@@ -14,18 +14,21 @@ int main(int argc, char **argv)
     void    *win;
 
     parcing(argc, argv);
-    mld = mlx_init();
-    if (!mld)
+    if(validate_map(argv))
     {
-        return (1);
+        mld = mlx_init();
+        if (!mld)
+        {
+            return (1);
+        }
+        
+        win = mlx_new_window(mld, 800, 600, "Zakaria");
+        if (!win)
+        {
+            return (1);
+        }
+        mlx_loop(mld);
     }
-    
-    win = mlx_new_window(mld, 800, 600, "Zakaria");
-    if (!win)
-    {
-        return (1);
-    }
-    mlx_loop(mld);
     // void *mld;
 
 
