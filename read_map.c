@@ -1,79 +1,88 @@
 #include "so_long.h"
 
-char    **read_map(char **argv)
+int read_map(char **argv, t_map *map)
 {
     int     fd;
     char    *line;
-    char    **map;
     int     i = 0;
 
     fd = open(argv[1], O_RDONLY);
     if (fd == -1)
-        message_error("Error: permission denied");
+        return (message_error("Error: permission denied", map), 0);
 
-    map = malloc(sizeof(char *) * 100); // Adjust size dynamically later
-    if (!map)
-        return (NULL);
-
+    map->rows = 0;
     while ((line = get_next_line(fd)))
     {
-        map[i++] = line; // Store each line in the array
+        free(line);
+        line = NULL;
+        map->rows++;
     }
-    map[i] = NULL; // Null-terminate the array
     close(fd);
-    return (map);
-}
 
-int check_rectangle(char **map)
-{
-    int width = ft_strlen(map[0]); // First row length
-    int i = 1;
+    map->full = malloc(sizeof(char *) * (map->rows + 1));
+    if (!map->full)
+        return (message_error("Error: Memory allocation failed", map), 0);
 
-    while (map[i])
+    fd = open(argv[1], O_RDONLY);
+    while ((line = get_next_line(fd)))
     {
-        if (ft_strlen(map[i]) != width)
-            return (message_error("Error: Map is not rectangular"), 0);
-        i++;
+        map->full[i] = line;
+        map->columns = ft_strlen(map->full[i++]);
     }
+    map->full[i] = NULL;
+    close(fd);
     return (1);
 }
 
-int check_walls(char **map)
+int check_rectangle(t_map *map)
+{
+    int width = ft_strlen(map->full[0]);
+    int i = 0;
+
+    while (map->full[i])
+    {
+        if ((int)ft_strlen(map->full[i]) != width)
+            return (message_error("Error: Map is not rectangular", map), 0);
+        i++;
+    }
+    map->rows = i;
+    return (1);
+}
+
+int check_walls(t_map *map)
 {
     int i = 0;
-    int width = ft_strlen(map[0]);
-    int height = 0;
-
-    while (map[height])
-        height++;
+    int width = ft_strlen(map->full[0]);
+    int height = map->rows;
 
     // Check first and last row
     while (i < width)
     {
-        if (map[0][i] != '1' || map[height - 1][i] != '1')
-            return (message_error("Error: Map is not surrounded by walls"), 0);
+        if (map->full[0][i] != '1' || map->full[height - 1][i] != '1')
+            return (message_error("Error: Map is not surrounded by walls",map), 0);
         i++;
     }
 
-    // Check first and last column
-    for (i = 0; i < height; i++)
+    i = 0;
+    while (i < height)
     {
-        if (map[i][0] != '1' || map[i][width - 1] != '1')
-            return (message_error("Error: Map is not surrounded by walls"), 0);
+        if (map->full[i][0] != '1' || map->full[i][width - 1] != '1')
+            return (message_error("Error: Map is not surrounded by walls",map), 0);
+        i++;
     }
     return (1);
 }
 
-void find_player(char **map, int *x, int *y)
+void find_player(t_map *map, int *x, int *y)
 {
     int i = 0, j;
 
-    while (map[i])
+    while (map->full[i])
     {
         j = 0;
-        while (map[i][j])
+        while (map->full[i][j])
         {
-            if (map[i][j] == 'P')
+            if (map->full[i][j] == 'P')
             {
                 *x = j;
                 *y = i;
@@ -85,6 +94,26 @@ void find_player(char **map, int *x, int *y)
     }
 }
 
+void find_door(t_map *map, int *x, int *y)
+{
+    int i = 0, j;
+    if(!map || map->full)
+        return;
+    while (map->full[i])
+    {
+        j = 0;
+        while (map->full[i][j])
+        {
+            if (map->full[i][j] == 'E')
+            {
+                *x = j;
+                *y = i;
+            }
+            j++;
+        }
+        i++;
+    }
+}
 
 void flood_fill(char **map, int x, int y)
 {
@@ -99,18 +128,17 @@ void flood_fill(char **map, int x, int y)
     flood_fill(map, x, y - 1);
 }
 
-
-int is_path_valid(char **map)
+int is_path_valid(t_map *map)
 {
     int i = 0, j;
 
-    while (map[i])
+    while (map->full[i])
     {
         j = 0;
-        while (map[i][j])
+        while (map->full[i][j])
         {
-            if (map[i][j] == 'C' || map[i][j] == 'E') // If 'C' or 'E' still exists, return error
-                return (message_error("Error: Player cannot reach all collectibles or exit"), 0);
+            if (map->full[i][j] == 'C' || map->full[i][j] == 'E') // If 'C' or 'E' still exists, return error
+                return (message_error("Error: Player cannot reach all collectibles or exit", map), 0);
             j++;
         }
         i++;
@@ -118,84 +146,87 @@ int is_path_valid(char **map)
     return (1);
 }
 
-
-int check_valid_chars(char **map)
+int check_valid_chars(t_map *map)
 {
     int i = 0, j;
     int player_count = 0, exit_count = 0, collectible_count = 0;
 
-    while (map[i])
+    while (map->full[i])
     {
         j = 0;
-        while (map[i][j])
+        while (map->full[i][j])
         {
-            if (map[i][j] == 'P') player_count++;
-            else if (map[i][j] == 'E') exit_count++;
-            else if (map[i][j] == 'C') collectible_count++;
-            else if (map[i][j] != '1' && map[i][j] != '0')
-                return (message_error("Error: Invalid character in map"), 0);
+            if (map->full[i][j] == 'P') player_count++;
+            else if (map->full[i][j] == 'E') exit_count++;
+            else if (map->full[i][j] == 'C') collectible_count++;
+            else if (map->full[i][j] != '1' && map->full[i][j] != '0')
+                return (message_error("Error: Invalid character in map", map), 0);
             j++;
         }
         i++;
     }
     if (player_count != 1 || exit_count < 1 || collectible_count < 1)
-        return (message_error("Error: Map must have 1 'P', at least 1 'E' and 1 'C'"), 0);
+        return (message_error("Error: Map must have 1 'P', at least 1 'E' and 1 'C'", map), 0);
     return (1);
 }
 
-void free_map(char **map)
+void free_map(t_map *map)
 {
     int i = 0;
 
-    while (map[i])
-        free(map[i++]); // Free each row
+    while (map->full[i])
+        free(map->full[i++]);
+    free(map->full);
     free(map);
 }
 
-
-char **copy_map(char **map)
+t_map   *copy_map(t_map *map)
 {
     int i = 0;
-    char **copy;
+    t_map   *copy;
 
-    while (map[i]) i++; // Count number of rows
-
-    copy = malloc(sizeof(char *) * (i + 1)); // Allocate memory for rows
-    if (!copy)
+    copy = malloc(1 * sizeof(t_map));
+    if(!copy)
+        return(0);
+    copy->columns = map->columns;
+    copy->rows = map->rows;
+    copy->full = malloc(sizeof(char *) * (map->rows + 1));
+    if (!copy->full)
         return (NULL);
-
-    for (int j = 0; j < i; j++)
-        copy[j] = ft_strdup(map[j]); // Duplicate each row
-
-    copy[i] = NULL; // Null-terminate
+    while(i < map->rows)
+    {
+        copy->full[i] = ft_strdup(map->full[i]);
+        i++;
+    }
+    copy->full[i] = NULL;
     return (copy);
 }
 
-
-int check_path_validity(char **map)
+int check_path_validity(t_map *map)
 {
-    int x, y;
-    char **map_copy = copy_map(map); // Make a copy of the map
+    t_map   *map_copy = copy_map(map);
 
     if (!map_copy)
-        return (message_error("Error: Failed to copy map"), 0);
+        return (message_error("Error: Failed to copy map",map), 0);
 
-    find_player(map_copy, &x, &y); // Find player position
-    flood_fill(map_copy, x, y); // Fill all reachable areas
+    find_door(map, &map->door.x, &map->door.y);
+    find_player(map, &map->player.x, &map->player.y);
+    flood_fill(map_copy->full, map->player.x, map->player.y);
 
     if (!is_path_valid(map_copy))
+    {
+        free_map(map_copy);
         return (0);
+    }
 
-    free_map(map_copy); // Free the copied map
+    free_map(map_copy);
     return (1);
 }
 
-
-int validate_map(char **argv)
+int validate_map(char **argv, t_map *map)
 {
-    char **map;
-
-    map = read_map(argv);
+    if (!read_map(argv, map))
+        return (0);
     if (!check_rectangle(map))
         return (0);
     if (!check_walls(map))

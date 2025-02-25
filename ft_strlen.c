@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/02/20 17:55:20 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/02/24 17:25:37 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 size_t	ft_strlen(const char *s)
 {
 	size_t	i;
-
+	if(!s)
+		return(0);
 	i = 0;
 	while (s[i])
 	{

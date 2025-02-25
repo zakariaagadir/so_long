@@ -1,6 +1,6 @@
 NAME = so_long
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 MLX_FLAGS = -lmlx_Linux -lX11 -lXext
 SRC = main.c ft_strnstr.c ft_strlen.c parcing.c \
 	read_map.c lib/get_next_line/get_next_line.c \

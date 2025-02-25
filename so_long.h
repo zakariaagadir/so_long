@@ -11,13 +11,49 @@
 #include <fcntl.h>
 
 
+typedef struct s_player
+{
+    int x;
+    int y;
+}   t_player;
+
+typedef struct s_door
+{
+    int x;
+    int y;
+}   t_door;
+
+typedef struct s_map
+{
+    char    **full;   // The actual map (2D array)
+    int     rows;     // Number of rows in the map
+    int     columns;  // Number of columns in the map
+    void    *mlx;     // MLX connection pointer
+    void    *win;     // MLX window pointer
+
+    // Textures
+    void *stone_image;     // Image for walls ('1')
+    void *grass_image;   // Image for walkable area ('0')
+    void *player_image;   // Image for player ('P')
+    void *coin_image; // Image for collectible ('C')
+    void *door_image;     // Image for exit ('E')
+
+    t_player player;  // Player's position
+    t_door door;
+}   t_map;
+
+
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 void    parcing(int argc, char **argv);
 size_t	ft_strlen(const char *s);
-char    **read_map(char **argv);
-void    message_error(char *message);
-int     validate_map(char **argv);
+int     read_map(char **argv, t_map *map);
+void    free_map(t_map *full);
+void    message_error(char *message, t_map *map);
+void    message_error_parcing(char *message);
+int     validate_map(char **argv, t_map *map);
 char	*ft_strdup(const char *s);
+
+
 
 
 
