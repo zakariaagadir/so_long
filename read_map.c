@@ -73,6 +73,28 @@ int check_walls(t_map *map)
     return (1);
 }
 
+void count_coin(t_map *map, int *coinnumber)
+{
+    int i;
+    int j;
+
+    *coinnumber = 0;
+    i = 0;
+    while (map->full[i])
+    {
+        j = 0;
+        while (map->full[i][j])
+        {
+            if (map->full[i][j] == 'C')
+            {
+                (*coinnumber)++;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
 void find_player(t_map *map, int *x, int *y)
 {
     int i = 0, j;
@@ -97,7 +119,7 @@ void find_player(t_map *map, int *x, int *y)
 void find_door(t_map *map, int *x, int *y)
 {
     int i = 0, j;
-    if(!map || map->full)
+    if(!map || !map->full)
         return;
     while (map->full[i])
     {
@@ -209,9 +231,10 @@ int check_path_validity(t_map *map)
     if (!map_copy)
         return (message_error("Error: Failed to copy map",map), 0);
 
-    find_door(map, &map->door.x, &map->door.y);
     find_player(map, &map->player.x, &map->player.y);
     flood_fill(map_copy->full, map->player.x, map->player.y);
+    find_door(map, &map->door.x, &map->door.y);
+    count_coin(map, &map->coinnumber);
 
     if (!is_path_valid(map_copy))
     {

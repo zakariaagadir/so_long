@@ -27,7 +27,8 @@ typedef struct s_map
 {
     char    **full;   // The actual map (2D array)
     int     rows;     // Number of rows in the map
-    int     columns;  // Number of columns in the map
+    int     columns;
+    int     coinnumber;  // Number of columns in the map
     void    *mlx;     // MLX connection pointer
     void    *win;     // MLX window pointer
 

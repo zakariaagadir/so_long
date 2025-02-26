@@ -78,7 +78,15 @@ int key_press(int keycode, t_map *map)
         map->player.x = new_x;
         map->player.y = new_y;
         if(map->full[map->player.y][map->player.x] == 'C')
+        {
             map->full[map->player.y][map->player.x] = '0';
+            map->coinnumber--;
+
+        }
+        else if(map->full[map->player.y][map->player.x] == 'E')
+                return (message_error("finished\n", map), 0);
+        else if(map->coinnumber == 0)
+            map->full[map->door.y][map->door.x] = 'E';
         draw_map(map); // Redraw the player only
     }
     return (0);
