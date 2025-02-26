@@ -195,7 +195,8 @@ int check_valid_chars(t_map *map)
 void free_map(t_map *map)
 {
     int i = 0;
-
+    if(!map->full)
+        return;
     while (map->full[i])
         free(map->full[i++]);
     free(map->full);
@@ -241,7 +242,7 @@ int check_path_validity(t_map *map)
         free_map(map_copy);
         return (0);
     }
-
+    map->moves=0;
     free_map(map_copy);
     return (1);
 }

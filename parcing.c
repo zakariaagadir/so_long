@@ -3,6 +3,20 @@
 void    message_error(char *message, t_map *map)
 {
     printf("Eror\n%s", message);
+    if (map->player_image)
+        mlx_destroy_image(map->mlx, map->player_image);
+    if (map->stone_image)
+        mlx_destroy_image(map->mlx, map->stone_image);
+    if (map->coin_image)
+        mlx_destroy_image(map->mlx, map->coin_image);
+    if (map->door_image)
+        mlx_destroy_image(map->mlx, map->door_image);
+    if (map->grass_image)
+        mlx_destroy_image(map->mlx, map->grass_image);
+    if (map->win)
+    mlx_destroy_window(map->mlx, map->win);
+    mlx_destroy_display(map->mlx);
+    free(map->mlx);
     free_map(map);
     exit(126);
 }

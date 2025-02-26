@@ -28,6 +28,7 @@ void load_textures(t_map *map)
 void draw_map(t_map *map)
 {
     int x, y;
+    char *move_str;
 
     y = 0;
     while (y < map->rows)
@@ -45,6 +46,10 @@ void draw_map(t_map *map)
                 else if (map->full[y][x] == 'E')
                     mlx_put_image_to_window(map->mlx, map->win, map->door_image, x * 64, y * 64);
             }
+            move_str = ft_itoa(map->moves);  // Convert move count to string
+            mlx_string_put(map->mlx, map->win, 64, 32, 0xFFFFFF, "Mouvements : ");
+            mlx_string_put(map->mlx, map->win, 64*3, 32, 0xFFFFFF, move_str);
+            free(move_str);
             x++;
         }
         y++;
@@ -65,13 +70,13 @@ int key_press(int keycode, t_map *map)
     int new_y = map->player.y;
 
     if (keycode == 65361 && map->full[map->player.y][map->player.x - 1] != '1') // Left
-        new_x--;
+        new_x--, map->moves++;
     if (keycode == 65363 && map->full[map->player.y][map->player.x + 1] != '1') // Right
-        new_x++;
+        new_x++, map->moves++;
     if (keycode == 65362 && map->full[map->player.y - 1][map->player.x] != '1') // Up
-        new_y--;
+        new_y--, map->moves++;
     if (keycode == 65364 && map->full[map->player.y + 1][map->player.x] != '1') // Down
-        new_y++;
+        new_y++, map->moves++;
 
     if (map->full[new_y][new_x] != '1') // Move only if not a wall
     {

@@ -27,6 +27,7 @@ typedef struct s_map
 {
     char    **full;   // The actual map (2D array)
     int     rows;     // Number of rows in the map
+    int     moves;
     int     columns;
     int     coinnumber;  // Number of columns in the map
     void    *mlx;     // MLX connection pointer
@@ -53,6 +54,7 @@ void    message_error(char *message, t_map *map);
 void    message_error_parcing(char *message);
 int     validate_map(char **argv, t_map *map);
 char	*ft_strdup(const char *s);
+char	*ft_itoa(int n);
 
 
 
