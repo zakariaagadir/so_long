@@ -38,11 +38,6 @@ typedef struct s_map
     int     coinnumber;  // Number of columns in the map
     void    *mlx;     // MLX connection pointer
     void    *win;     // MLX window pointer
-    void    *player_images[8]; // Store all frames
-    void    *player_images_left[8]; // left
-    int     current_frame;
-    int     is_moving;
-
 
     // Textures
     void *stone_image;     // Image for walls ('1')

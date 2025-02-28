@@ -116,27 +116,6 @@ void find_player(t_map *map, int *x, int *y)
     }
 }
 
-void find_Unemy(t_map *map, int *x, int *y)
-{
-    int i = 0, j;
-
-    while (map->full[i])
-    {
-        j = 0;
-        while (map->full[i][j])
-        {
-            if (map->full[i][j] == 'P')
-            {
-                *x = j;
-                *y = i;
-                return;
-            }
-            j++;
-        }
-        i++;
-    }
-}
-
 void find_door(t_map *map, int *x, int *y)
 {
     int i = 0, j;
@@ -256,7 +235,6 @@ int check_path_validity(t_map *map)
     find_player(map, &map->player.x, &map->player.y);
     flood_fill(map_copy->full, map->player.x, map->player.y);
     find_door(map, &map->door.x, &map->door.y);
-    find_Unemy(map, &map->Unemy.x, &map->Unemy.y);
     count_coin(map, &map->coinnumber);
 
     if (!is_path_valid(map_copy))

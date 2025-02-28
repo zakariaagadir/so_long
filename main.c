@@ -7,22 +7,41 @@ void load_textures(t_map *map)
     map->mlx = mlx_init();
     if (!map->mlx)
     {
-        write(2, "Error: MLX initialization failed\n", ft_strlen("Error: MLX initialization failed\n"));
+        write(2, "Error: MLX initialization failed\n", 33);
         exit(EXIT_FAILURE);
     }
     map->win = mlx_new_window(map->mlx, map->columns * 64, map->rows * 64, "My Window");
 
     map->stone_image = mlx_xpm_file_to_image(map->mlx, "textures/stone_wall02.xpm", &w, &h);
     map->grass_image = mlx_xpm_file_to_image(map->mlx, "textures/grass.xpm", &w, &h);
-    map->player_image = mlx_xpm_file_to_image(map->mlx, "textures/player.xpm", &w, &h);
+    map->Unemy_image = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player.xpm", &w, &h);
+    
+    // Right walk animation frames
+    map->player_images[0] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player1.xpm", &w, &h);
+    map->player_images[1] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player2.xpm", &w, &h);
+    map->player_images[2] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player3.xpm", &w, &h);
+    map->player_images[3] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player4.xpm", &w, &h);
+    map->player_images[4] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player5.xpm", &w, &h);
+    map->player_images[5] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player6.xpm", &w, &h);
+    map->player_images[6] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player7.xpm", &w, &h);
+    map->player_images[7] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player8.xpm", &w, &h);
+
+    // Left walk animation frames (flipped)
+    map->player_images_left[0] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player1.xpm", &w, &h);
+    map->player_images_left[1] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player2.xpm", &w, &h);
+    map->player_images_left[2] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player3.xpm", &w, &h);
+    map->player_images_left[3] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player4.xpm", &w, &h);
+    map->player_images_left[4] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player5.xpm", &w, &h);
+    map->player_images_left[5] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player6.xpm", &w, &h);
+    map->player_images_left[6] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player7.xpm", &w, &h);
+    map->player_images_left[7] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player8.xpm", &w, &h);
+
+    map->player_image = map->player_images[0]; // Default image
+    map->current_frame = 0;
+    map->is_moving = 0;
+
     map->coin_image = mlx_xpm_file_to_image(map->mlx, "textures/coin.xpm", &w, &h);
     map->door_image = mlx_xpm_file_to_image(map->mlx, "textures/door.xpm", &w, &h);
-
-    if (!map->stone_image || !map->grass_image || !map->player_image || !map->coin_image || !map->door_image)
-    {
-        write(2, "Error: Failed to load textures\n", ft_strlen("Error: Failed to load textures\n"));
-        exit(EXIT_FAILURE);
-    }
 }
 
 void draw_map(t_map *map)
@@ -36,43 +55,56 @@ void draw_map(t_map *map)
         x = 0;
         while (x < map->columns)
         {
+            mlx_put_image_to_window(map->mlx, map->win, map->grass_image, x * 64, y * 64);
             if (map->full[y][x] == '1')
                 mlx_put_image_to_window(map->mlx, map->win, map->stone_image, x * 64, y * 64);
-            else
-            {
-                mlx_put_image_to_window(map->mlx, map->win, map->grass_image, x * 64, y * 64);
-                if (map->full[y][x] == 'C')
-                    mlx_put_image_to_window(map->mlx, map->win, map->coin_image, x * 64, y * 64);
-                else if (map->full[y][x] == 'E')
-                    mlx_put_image_to_window(map->mlx, map->win, map->door_image, x * 64, y * 64);
-            }
-            move_str = ft_itoa(map->moves);  // Convert move count to string
-            mlx_string_put(map->mlx, map->win, 64, 32, 0xFFFFFF, "Mouvements : ");
-            mlx_string_put(map->mlx, map->win, 64*3, 32, 0xFFFFFF, move_str);
-            free(move_str);
+            else if (map->full[y][x] == 'C')
+                mlx_put_image_to_window(map->mlx, map->win, map->coin_image, x * 64, y * 64);
+            else if (map->full[y][x] == 'E')
+                mlx_put_image_to_window(map->mlx, map->win, map->door_image, x * 64, y * 64);
+            else if (map->full[y][x] == 'U')
+                mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image, x * 64, y * 64);
             x++;
         }
         y++;
     }
-    // Draw player separately to avoid flickering
+    move_str = ft_itoa(map->moves);  // Convert move count to string
+    mlx_string_put(map->mlx, map->win, 64, 32, 0xFFFFFF, "Mouvements : ");
+    mlx_string_put(map->mlx, map->win, 64*3, 32, 0xFFFFFF, move_str);
+
+    // Draw player
     mlx_put_image_to_window(map->mlx, map->win, map->player_image, map->player.x * 64, map->player.y * 64);
 }
 
 int key_press(int keycode, t_map *map)
 {
-    if (keycode == 65307) // Escape key
-    {
-        free_map(map);
-        exit(0);
-    }
-
+    
     int new_x = map->player.x;
     int new_y = map->player.y;
 
-    if (keycode == 65361 && map->full[map->player.y][map->player.x - 1] != '1') // Left
-        new_x--, map->moves++;
-    if (keycode == 65363 && map->full[map->player.y][map->player.x + 1] != '1') // Right
-        new_x++, map->moves++;
+    if (keycode == 65307) // Escape key
+        return (message_error_mlx("Esc key \n", map), 0);
+
+    if (keycode == 65361) // Left key
+    {
+        if (new_x >= 0 && map->full[new_y][new_x - 1] != '1') // Prevent negative index
+        {
+            new_x--;
+            map->moves++;
+            map->is_moving = 1;
+            map->player_image = map->player_images_left[map->current_frame];
+        }
+    }
+    if (keycode == 65363) // Right key
+    {
+        if (new_x < map->columns - 1 && map->full[new_y][new_x + 1] != '1') // Prevent out-of-bounds access
+        {
+            new_x++;
+            map->moves++;
+            map->is_moving = 1;
+            map->player_image = map->player_images[map->current_frame];
+        }
+    }
     if (keycode == 65362 && map->full[map->player.y - 1][map->player.x] != '1') // Up
         new_y--, map->moves++;
     if (keycode == 65364 && map->full[map->player.y + 1][map->player.x] != '1') // Down
@@ -80,20 +112,30 @@ int key_press(int keycode, t_map *map)
 
     if (map->full[new_y][new_x] != '1') // Move only if not a wall
     {
-        map->player.x = new_x;
-        map->player.y = new_y;
-        if(map->full[map->player.y][map->player.x] == 'C')
-        {
-            map->full[map->player.y][map->player.x] = '0';
-            map->coinnumber--;
+            map->player.x = new_x;
+            map->player.y = new_y;
+            if(map->full[map->player.y][map->player.x] == 'C')
+            {
+                map->full[map->player.y][map->player.x] = '0';
+                map->coinnumber--;
 
-        }
-        else if(map->full[map->player.y][map->player.x] == 'E')
-                return (message_error("finished\n", map), 0);
-        else if(map->coinnumber == 0)
-            map->full[map->door.y][map->door.x] = 'E';
-        draw_map(map); // Redraw the player only
+            }
+            if(map->full[map->player.y][map->player.x] == 'E')
+                    return (message_error_mlx("finished\n", map), 0);
+            if(map->full[map->player.y][map->player.x] == 'U')
+                    return (message_error_mlx("finished\n", map), 0);
+             if(map->coinnumber == 0)
+                map->full[map->door.y][map->door.x] = 'E';
     }
+        map->current_frame = (map->current_frame + 1) % 8; // Update animation frame
+        draw_map(map);
+    return (0);
+}
+
+int animate_player(t_map *map)
+{
+    map->current_frame = (map->current_frame + 1) % 8;
+    draw_map(map);
     return (0);
 }
 
@@ -113,6 +155,7 @@ int main(int argc, char **argv)
         draw_map(map);
 
         mlx_hook(map->win, 2, 1L << 0, key_press, map); // Handle key press events
+        mlx_loop_hook(map->mlx, animate_player, map);
         mlx_loop(map->mlx);
     }
 
