@@ -62,18 +62,23 @@ void draw_map(t_map *map)
                 mlx_put_image_to_window(map->mlx, map->win, map->coin_image, x * 64, y * 64);
             else if (map->full[y][x] == 'E')
                 mlx_put_image_to_window(map->mlx, map->win, map->door_image, x * 64, y * 64);
-            else if (map->full[y][x] == 'U')
-                mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image, x * 64, y * 64);
             x++;
         }
         y++;
     }
+
     move_str = ft_itoa(map->moves);  // Convert move count to string
     mlx_string_put(map->mlx, map->win, 64, 32, 0xFFFFFF, "Mouvements : ");
     mlx_string_put(map->mlx, map->win, 64*3, 32, 0xFFFFFF, move_str);
-
+    free(move_str);
     // Draw player
     mlx_put_image_to_window(map->mlx, map->win, map->player_image, map->player.x * 64, map->player.y * 64);
+    y = 0;
+    while (y < map->nbUnemy)
+    {
+        mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image, map->Unemy[y].x * 64, map->Unemy[y].y * 64);
+        y++;
+    }
 }
 
 int key_press(int keycode, t_map *map)
@@ -122,8 +127,7 @@ int key_press(int keycode, t_map *map)
             }
             if(map->full[map->player.y][map->player.x] == 'E')
                     return (message_error_mlx("finished\n", map), 0);
-            if(map->full[map->player.y][map->player.x] == 'U')
-                    return (message_error_mlx("finished\n", map), 0);
+            
              if(map->coinnumber == 0)
                 map->full[map->door.y][map->door.x] = 'E';
     }
@@ -134,15 +138,73 @@ int key_press(int keycode, t_map *map)
 
 int animate_player(t_map *map)
 {
+    int newx;
+    int p;
+
+    p = 0;
+    while (p < map->nbUnemy)
+    {
+        map->Unemy[p].tracker++;
+        if(map->Unemy[p].tracker > (ENEMY_SPEED * 10))
+        {
+            newx = map->Unemy[p].x + (1 * map->Unemy[p].direction );
+            if(map->full[map->Unemy[p].y][newx]!='1')
+                map->Unemy[p].x += 1* (map->Unemy[p].direction);
+            else
+                map->Unemy[p].direction *= -1;
+
+        map->Unemy[p].tracker = 0;
+        }
+        if(map->player.y == map->Unemy[p].y && map->player.x == map->Unemy[p].x)
+                        return (message_error_mlx("finished\n", map), 0);
+    }
     map->current_frame = (map->current_frame + 1) % 8;
+    
     draw_map(map);
+    mlx_put_image_to_window(map->mlx, map->win, map->player_image, map->player.x * 64, map->player.y * 64);
+
     return (0);
 }
+
+// int move_enemy(t_map *map)
+// {
+//     static clock_t last_move = 0;
+//     clock_t now = clock();
+    
+//     // Move enemy only if 2 seconds have passed
+//     if (((double)(now - last_move) / CLOCKS_PER_SEC) >= 2.0)
+//     {
+//         int new_x = map->Unemy.x + map->Unemy.direction;
+
+//         if (new_x < 0 || new_x >= map->columns || map->full[map->Unemy.y][new_x] == '1')
+//             map->Unemy.direction *= -1;  // Reverse direction
+//         else
+//         {
+//             map->full[map->Unemy.y][map->Unemy.x] = '0';
+//             map->Unemy.x = new_x;  // Move enemy
+//             map->full[map->Unemy.y][map->Unemy.x] = 'U';
+
+//         }
+
+//         last_move = now;  // Reset timer
+
+//         // Erase previous enemy position by drawing background
+//         mlx_put_image_to_window(map->mlx, map->win, map->grass_image, map->Unemy.x * 64, map->Unemy.y * 64);
+
+//         // Draw new enemy position
+//         mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image, map->Unemy.x * 64, map->Unemy.y * 64);
+//     }
+    
+//     return (0);
+// }
+
 
 int main(int argc, char **argv)
 {
     t_map *map;
+    int p;
 
+    p = 0;
     parcing(argc, argv);
     map = malloc(sizeof(t_map));
     if (!map)
@@ -150,12 +212,22 @@ int main(int argc, char **argv)
 
     if (validate_map(argv, map))
     {
+
+    while (p < map->nbUnemy)
+    {
+        map->Unemy[p].tracker = 0;
+        map->Unemy[p].direction = 1;
+        p++;
+    }
         load_textures(map);
         map->full[map->door.y][map->door.x] = '0';
         draw_map(map);
 
         mlx_hook(map->win, 2, 1L << 0, key_press, map); // Handle key press events
         mlx_loop_hook(map->mlx, animate_player, map);
+        // mlx_loop();
+        // mlx_loop_hook(mlx, draw_map, NULL);
+        // mlx_loop_hook(map->mlx, move_enemy, map);
         mlx_loop(map->mlx);
     }
 

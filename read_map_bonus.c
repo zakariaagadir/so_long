@@ -249,6 +249,7 @@ int check_path_validity(t_map *map)
 
 int validate_map(char **argv, t_map *map)
 {
+    map->nbUnemy = 0;
     if (!read_map(argv, map))
         return (0);
     if (!check_rectangle(map))

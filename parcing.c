@@ -1,10 +1,26 @@
 #include "so_long.h"
 
-void    message_error_mlx(char *message, t_map *map)
+void message_error_mlx(char *message, t_map *map)
 {
+    int i;
+
     printf("%s\n", message);
-    if (map->player_image)
-        mlx_destroy_image(map->mlx, map->player_image);
+    i = 0;
+    while (i < 8)
+    {
+        if (map->mlx && map->player_images && map->player_images[i])
+            mlx_destroy_image(map->mlx, map->player_images[i]);
+        i++;
+    }
+    i = 0;
+    while (i < 8)
+    {
+        if (map->mlx && map->player_images_left && map->player_images_left[i])
+            mlx_destroy_image(map->mlx, map->player_images_left[i]);
+        i++;
+    }
+    // if (map->player_image)
+    //     mlx_destroy_image(map->mlx, map->player_image);
     if (map->stone_image)
         mlx_destroy_image(map->mlx, map->stone_image);
     if (map->coin_image)
@@ -13,6 +29,8 @@ void    message_error_mlx(char *message, t_map *map)
         mlx_destroy_image(map->mlx, map->door_image);
     if (map->grass_image)
         mlx_destroy_image(map->mlx, map->grass_image);
+    if (map->Unemy_image)
+        mlx_destroy_image(map->mlx, map->Unemy_image);
     if (map->win)
     {
         mlx_destroy_window(map->mlx, map->win);
@@ -20,8 +38,10 @@ void    message_error_mlx(char *message, t_map *map)
         free(map->mlx);
     }
     free_map(map);
+    
     exit(126);
 }
+
 
 void    message_error(char *message, t_map *map)
 {

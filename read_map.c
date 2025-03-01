@@ -116,7 +116,7 @@ void find_player(t_map *map, int *x, int *y)
     }
 }
 
-void find_Unemy(t_map *map, int *x, int *y)
+void count_Unemy(t_map *map)
 {
     int i = 0, j;
 
@@ -125,10 +125,32 @@ void find_Unemy(t_map *map, int *x, int *y)
         j = 0;
         while (map->full[i][j])
         {
-            if (map->full[i][j] == 'P')
+            if (map->full[i][j] == 'U')
+            {
+                map->nbUnemy++;
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
+void find_Unemy(t_map *map, int *x, int *y)
+{
+    static int i;
+    static int j;
+
+    i = 0;
+    while (map->full[i])
+    {
+        j = 0;
+        while (map->full[i][j])
+        {
+            if (map->full[i][j] == 'U')
             {
                 *x = j;
                 *y = i;
+                j++;
                 return;
             }
             j++;
@@ -249,15 +271,22 @@ t_map   *copy_map(t_map *map)
 int check_path_validity(t_map *map)
 {
     t_map   *map_copy = copy_map(map);
+    int     i;
 
+    i = 0;
     if (!map_copy)
         return (message_error("Error: Failed to copy map",map), 0);
-
     find_player(map, &map->player.x, &map->player.y);
-    flood_fill(map_copy->full, map->player.x, map->player.y);
     find_door(map, &map->door.x, &map->door.y);
-    find_Unemy(map, &map->Unemy.x, &map->Unemy.y);
     count_coin(map, &map->coinnumber);
+    flood_fill(map_copy->full, map->player.x, map->player.y);
+    count_Unemy(map);
+    map->Unemy = malloc((map->nbUnemy)* sizeof(t_Unemy));
+    while(i < map->nbUnemy)
+    {
+        find_Unemy(map, &map->Unemy[i].x, &map->Unemy[i].y);
+        i++;
+    }
 
     if (!is_path_valid(map_copy))
     {

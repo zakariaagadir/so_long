@@ -9,7 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
+#include <time.h>
 
+
+#define ENEMY_SPEED 50
 
 typedef struct s_player
 {
@@ -27,6 +30,8 @@ typedef struct s_Unemy
 {
     int x;
     int y;
+    int tracker;
+    int direction;
 }   t_Unemy;
 
 typedef struct s_map
@@ -45,16 +50,17 @@ typedef struct s_map
 
 
     // Textures
-    void *stone_image;     // Image for walls ('1')
-    void *grass_image;   // Image for walkable area ('0')
-    void *player_image;   // Image for player ('P')
-    void *Unemy_image;
-    void *coin_image; // Image for collectible ('C')
-    void *door_image;     // Image for exit ('E')
+    void    *stone_image;     // Image for walls ('1')
+    void    *grass_image;   // Image for walkable area ('0')
+    void    *player_image;   // Image for player ('P')
+    void    *Unemy_image;
+    void    *coin_image; // Image for collectible ('C')
+    void    *door_image;     // Image for exit ('E')
+    int     nbUnemy;
 
     t_player player;  // Player's position
     t_door door;
-    t_Unemy Unemy;
+    t_Unemy *Unemy;
 }   t_map;
 
 
