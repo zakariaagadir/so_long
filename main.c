@@ -14,7 +14,18 @@ void load_textures(t_map *map)
 
     map->stone_image = mlx_xpm_file_to_image(map->mlx, "textures/stone_wall02.xpm", &w, &h);
     map->grass_image = mlx_xpm_file_to_image(map->mlx, "textures/grass.xpm", &w, &h);
-    map->Unemy_image = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player.xpm", &w, &h);
+    //Unemy
+    map->Unemy_image[0] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy1.xpm", &w, &h);
+    map->Unemy_image[1] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy2.xpm", &w, &h);
+    map->Unemy_image[2] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy3.xpm", &w, &h);
+    map->Unemy_image[3] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy4.xpm", &w, &h);
+    map->Unemy_image[4] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy5.xpm", &w, &h);
+    map->Unemy_image[5] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy6.xpm", &w, &h);
+    map->Unemy_image[6] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy7.xpm", &w, &h);
+    map->Unemy_image[7] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy8.xpm", &w, &h);
+    map->Unemy_image[8] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy9.xpm", &w, &h);
+    map->Unemy_image[9] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy10.xpm", &w, &h);
+
     
     // Right walk animation frames
     map->player_images[0] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player1.xpm", &w, &h);
@@ -76,7 +87,7 @@ void draw_map(t_map *map)
     y = 0;
     while (y < map->nbUnemy)
     {
-        mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image, map->Unemy[y].x * 64, map->Unemy[y].y * 64);
+        mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image[map->current_frame%10], map->Unemy[y].x * 64, map->Unemy[y].y * 64);
         y++;
     }
 }
@@ -131,7 +142,7 @@ int key_press(int keycode, t_map *map)
              if(map->coinnumber == 0)
                 map->full[map->door.y][map->door.x] = 'E';
     }
-        map->current_frame = (map->current_frame + 1) % 8; // Update animation frame
+        map->current_frame = (map->current_frame + 1) % 8;
         draw_map(map);
     return (0);
 }
@@ -167,37 +178,6 @@ int animate_player(t_map *map)
     return (0);
 }
 
-// int move_enemy(t_map *map)
-// {
-//     static clock_t last_move = 0;
-//     clock_t now = clock();
-    
-//     // Move enemy only if 2 seconds have passed
-//     if (((double)(now - last_move) / CLOCKS_PER_SEC) >= 2.0)
-//     {
-//         int new_x = map->Unemy.x + map->Unemy.direction;
-
-//         if (new_x < 0 || new_x >= map->columns || map->full[map->Unemy.y][new_x] == '1')
-//             map->Unemy.direction *= -1;  // Reverse direction
-//         else
-//         {
-//             map->full[map->Unemy.y][map->Unemy.x] = '0';
-//             map->Unemy.x = new_x;  // Move enemy
-//             map->full[map->Unemy.y][map->Unemy.x] = 'U';
-
-//         }
-
-//         last_move = now;  // Reset timer
-
-//         // Erase previous enemy position by drawing background
-//         mlx_put_image_to_window(map->mlx, map->win, map->grass_image, map->Unemy.x * 64, map->Unemy.y * 64);
-
-//         // Draw new enemy position
-//         mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image, map->Unemy.x * 64, map->Unemy.y * 64);
-//     }
-    
-//     return (0);
-// }
 
 
 int main(int argc, char **argv)

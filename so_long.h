@@ -53,7 +53,7 @@ typedef struct s_map
     void    *stone_image;     // Image for walls ('1')
     void    *grass_image;   // Image for walkable area ('0')
     void    *player_image;   // Image for player ('P')
-    void    *Unemy_image;
+    void    *Unemy_image[10];
     void    *coin_image; // Image for collectible ('C')
     void    *door_image;     // Image for exit ('E')
     int     nbUnemy;
