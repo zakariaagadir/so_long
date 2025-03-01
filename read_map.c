@@ -135,12 +135,12 @@ void count_Unemy(t_map *map)
     }
 }
 
-void find_Unemy(t_map *map, int *x, int *y)
+void find_Unemy(t_map *map, int *x, int *y, int index)
 {
-    static int i;
-    static int j;
+    int i = 0;
+    int j;
+    int count = 0; // Track how many enemies we've found
 
-    i = 0;
     while (map->full[i])
     {
         j = 0;
@@ -148,16 +148,20 @@ void find_Unemy(t_map *map, int *x, int *y)
         {
             if (map->full[i][j] == 'U')
             {
-                *x = j;
-                *y = i;
-                j++;
-                return;
+                if (count == index) // Return the enemy at the given index
+                {
+                    *x = j;
+                    *y = i;
+                    return;
+                }
+                count++; // Found one enemy, move to the next
             }
             j++;
         }
         i++;
     }
 }
+
 
 void find_door(t_map *map, int *x, int *y)
 {
@@ -243,6 +247,18 @@ void free_map(t_map *map)
     while (map->full[i])
         free(map->full[i++]);
     free(map->full);
+    free(map->Unemy);
+    free(map);
+}
+
+void free_mapc(t_map *map)
+{
+    int i = 0;
+    if(!map->full)
+        return;
+    while (map->full[i])
+        free(map->full[i++]);
+    free(map->full);
     free(map);
 }
 
@@ -284,17 +300,16 @@ int check_path_validity(t_map *map)
     map->Unemy = malloc((map->nbUnemy)* sizeof(t_Unemy));
     while(i < map->nbUnemy)
     {
-        find_Unemy(map, &map->Unemy[i].x, &map->Unemy[i].y);
+        find_Unemy(map, &map->Unemy[i].x, &map->Unemy[i].y, i);
         i++;
     }
-
     if (!is_path_valid(map_copy))
     {
-        free_map(map_copy);
+        free_mapc(map_copy);
         return (0);
     }
     map->moves=0;
-    free_map(map_copy);
+    free_mapc(map_copy);
     return (1);
 }
 

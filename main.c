@@ -157,6 +157,7 @@ int animate_player(t_map *map)
         }
         if(map->player.y == map->Unemy[p].y && map->player.x == map->Unemy[p].x)
                         return (message_error_mlx("finished\n", map), 0);
+        p++;
     }
     map->current_frame = (map->current_frame + 1) % 8;
     
@@ -209,16 +210,16 @@ int main(int argc, char **argv)
     map = malloc(sizeof(t_map));
     if (!map)
         return (1);
-
+    map->nbUnemy=0;
     if (validate_map(argv, map))
     {
 
-    while (p < map->nbUnemy)
-    {
-        map->Unemy[p].tracker = 0;
-        map->Unemy[p].direction = 1;
-        p++;
-    }
+        while (p < map->nbUnemy)
+        {
+            map->Unemy[p].tracker = 0;
+            map->Unemy[p].direction = 1;
+            p++;
+        }
         load_textures(map);
         map->full[map->door.y][map->door.x] = '0';
         draw_map(map);
