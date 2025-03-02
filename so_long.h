@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 04:15:15 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 04:19:11 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #include <unistd.h>
 #include <mlx.h>
-# include <X11/X.h>
+#include <X11/X.h>
 # include <X11/keysym.h>
 # include <unistd.h>
 #include <stdio.h>

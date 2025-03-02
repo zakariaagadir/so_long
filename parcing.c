@@ -12,27 +12,27 @@
 
 #include "so_long.h"
 
-void    message_error(char *message, t_map *map)
+void	message_error(char *message, t_map *map)
 {
-    write(2, message, ft_strlen(message));
-    write(2, "\n", 1);
-    free_map(map);
-    exit(EXIT_FAILURE);
+	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
+	free_map(map);
+	exit(EXIT_FAILURE);
 }
 
-void    message_error_parcing(char *message)
+void	message_error_parcing(char *message)
 {
-    printf("Eror\n%s", message);
-    exit(EXIT_FAILURE);
+	printf("Eror\n%s", message);
+	exit(EXIT_FAILURE);
 }
 
-void    parcing(int argc, char **argv)
+void	parcing(int argc, char **argv)
 {
-    size_t  i;
+	size_t	i;
 
-    if(argc != 2)
-        message_error_parcing("number of arguments are not correct");
-    i = ft_strlen(argv[1]);
-    if(!ft_strnstr(&argv[1][i - 4], ".ber", 4))
-        message_error_parcing("Map file extention is wrong (It should be .ber)");
+	if (argc != 2)
+		message_error_parcing("number of arguments are not correct");
+	i = ft_strlen(argv[1]);
+	if (!ft_strnstr(&argv[1][i - 4], ".ber", 4))
+		message_error_parcing("Map file extention is wrong (It should be .ber)");
 }
