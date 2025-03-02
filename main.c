@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
+/*   Updated: 2025/03/02 04:14:46 by zmounji          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 void unemy_mv_w(t_map *map)
@@ -58,7 +70,7 @@ int    handl_fun(t_map *map, int *new_y, int *new_x)
 
             }
             if(map->full[map->player.y][map->player.x] == 'E')
-                    return (winner("you re win\n", map), 0);
+                    return (winner("you are win\n", map), 0);
             
              if(map->coinnumber == 0)
                 map->full[map->door.y][map->door.x] = 'E';
