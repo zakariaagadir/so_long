@@ -1,5 +1,46 @@
 #include "so_long.h"
 
+void load_Unemy(t_map *map)
+{
+    int w, h;
+    map->Unemy_image[0] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy1.xpm", &w, &h);
+    map->Unemy_image[1] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy2.xpm", &w, &h);
+    map->Unemy_image[2] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy3.xpm", &w, &h);
+    map->Unemy_image[3] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy4.xpm", &w, &h);
+    map->Unemy_image[4] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy5.xpm", &w, &h);
+    map->Unemy_image[5] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy6.xpm", &w, &h);
+    map->Unemy_image[6] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy7.xpm", &w, &h);
+    map->Unemy_image[7] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy8.xpm", &w, &h);
+    map->Unemy_image[8] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy9.xpm", &w, &h);
+    map->Unemy_image[9] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy10.xpm", &w, &h);
+}
+
+void load_Playerf(t_map *map)
+{
+    int w, h;
+    map->player_images[0] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player1.xpm", &w, &h);
+    map->player_images[1] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player2.xpm", &w, &h);
+    map->player_images[2] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player3.xpm", &w, &h);
+    map->player_images[3] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player4.xpm", &w, &h);
+    map->player_images[4] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player5.xpm", &w, &h);
+    map->player_images[5] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player6.xpm", &w, &h);
+    map->player_images[6] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player7.xpm", &w, &h);
+    map->player_images[7] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player8.xpm", &w, &h);
+}
+
+void load_Playerl(t_map *map)
+{
+    int w, h;
+    map->player_images_left[0] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player1.xpm", &w, &h);
+    map->player_images_left[1] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player2.xpm", &w, &h);
+    map->player_images_left[2] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player3.xpm", &w, &h);
+    map->player_images_left[3] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player4.xpm", &w, &h);
+    map->player_images_left[4] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player5.xpm", &w, &h);
+    map->player_images_left[5] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player6.xpm", &w, &h);
+    map->player_images_left[6] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player7.xpm", &w, &h);
+    map->player_images_left[7] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player8.xpm", &w, &h);
+}
+
 void load_textures(t_map *map)
 {
     int w, h;
@@ -14,39 +55,12 @@ void load_textures(t_map *map)
 
     map->stone_image = mlx_xpm_file_to_image(map->mlx, "textures/stone_wall02.xpm", &w, &h);
     map->grass_image = mlx_xpm_file_to_image(map->mlx, "textures/grass.xpm", &w, &h);
-    //Unemy
-    map->Unemy_image[0] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy1.xpm", &w, &h);
-    map->Unemy_image[1] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy2.xpm", &w, &h);
-    map->Unemy_image[2] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy3.xpm", &w, &h);
-    map->Unemy_image[3] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy4.xpm", &w, &h);
-    map->Unemy_image[4] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy5.xpm", &w, &h);
-    map->Unemy_image[5] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy6.xpm", &w, &h);
-    map->Unemy_image[6] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy7.xpm", &w, &h);
-    map->Unemy_image[7] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy8.xpm", &w, &h);
-    map->Unemy_image[8] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy9.xpm", &w, &h);
-    map->Unemy_image[9] = mlx_xpm_file_to_image(map->mlx, "textures/Unemy/Unemy10.xpm", &w, &h);
-
-    
-    // Right walk animation frames
-    map->player_images[0] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player1.xpm", &w, &h);
-    map->player_images[1] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player2.xpm", &w, &h);
-    map->player_images[2] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player3.xpm", &w, &h);
-    map->player_images[3] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player4.xpm", &w, &h);
-    map->player_images[4] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player5.xpm", &w, &h);
-    map->player_images[5] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player6.xpm", &w, &h);
-    map->player_images[6] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player7.xpm", &w, &h);
-    map->player_images[7] = mlx_xpm_file_to_image(map->mlx, "textures/player_move_front/player8.xpm", &w, &h);
-
-    // Left walk animation frames (flipped)
-    map->player_images_left[0] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player1.xpm", &w, &h);
-    map->player_images_left[1] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player2.xpm", &w, &h);
-    map->player_images_left[2] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player3.xpm", &w, &h);
-    map->player_images_left[3] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player4.xpm", &w, &h);
-    map->player_images_left[4] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player5.xpm", &w, &h);
-    map->player_images_left[5] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player6.xpm", &w, &h);
-    map->player_images_left[6] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player7.xpm", &w, &h);
-    map->player_images_left[7] = mlx_xpm_file_to_image(map->mlx, "textures/move_player_back/player8.xpm", &w, &h);
-
+//Unemy
+    load_Unemy(map);
+// Right walk animation frames
+    load_Playerf(map);
+// Left walk animation frames (flipped)
+    load_Playerl(map);
     map->player_image = map->player_images[0]; // Default image
     map->current_frame = 0;
     map->is_moving = 0;
@@ -55,10 +69,29 @@ void load_textures(t_map *map)
     map->door_image = mlx_xpm_file_to_image(map->mlx, "textures/door.xpm", &w, &h);
 }
 
+void unemy_mv_w(t_map *map)
+{
+    int y;
+    char *move_str;
+
+    y = 0;
+    move_str = ft_itoa(map->moves);  // Convert move count to string
+    mlx_string_put(map->mlx, map->win, 64, 32, 0xFFFFFF, "Mouvements : ");
+    mlx_string_put(map->mlx, map->win, 64*3, 32, 0xFFFFFF, move_str);
+    free(move_str);
+    mlx_put_image_to_window(map->mlx, map->win, map->player_image, map->player.x * 64, map->player.y * 64);
+    y = 0;
+    while (y < map->nbUnemy)
+    {
+        mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image[map->current_frame%10], map->Unemy[y].x * 64, map->Unemy[y].y * 64);
+        y++;
+    }
+}
+
 void draw_map(t_map *map)
 {
-    int x, y;
-    char *move_str;
+    int x;
+    int y;
 
     y = 0;
     while (y < map->rows)
@@ -77,19 +110,8 @@ void draw_map(t_map *map)
         }
         y++;
     }
+    unemy_mv_w(map);
 
-    move_str = ft_itoa(map->moves);  // Convert move count to string
-    mlx_string_put(map->mlx, map->win, 64, 32, 0xFFFFFF, "Mouvements : ");
-    mlx_string_put(map->mlx, map->win, 64*3, 32, 0xFFFFFF, move_str);
-    free(move_str);
-    // Draw player
-    mlx_put_image_to_window(map->mlx, map->win, map->player_image, map->player.x * 64, map->player.y * 64);
-    y = 0;
-    while (y < map->nbUnemy)
-    {
-        mlx_put_image_to_window(map->mlx, map->win, map->Unemy_image[map->current_frame%10], map->Unemy[y].x * 64, map->Unemy[y].y * 64);
-        y++;
-    }
 }
 
 int key_press(int keycode, t_map *map)
@@ -98,7 +120,7 @@ int key_press(int keycode, t_map *map)
     int new_x = map->player.x;
     int new_y = map->player.y;
 
-    if (keycode == 65307) // Escape key
+    if (keycode == 65307 || keycode == 42) // Escape key
         return (message_error_mlx("Esc key \n", map), 0);
 
     if (keycode == 65361) // Left key
@@ -203,9 +225,9 @@ int main(int argc, char **argv)
         load_textures(map);
         map->full[map->door.y][map->door.x] = '0';
         draw_map(map);
-
         mlx_hook(map->win, 2, 1L << 0, key_press, map); // Handle key press events
         mlx_loop_hook(map->mlx, animate_player, map);
+        mlx_hook(map->win, 17, 0, closegame, map);
         // mlx_loop();
         // mlx_loop_hook(mlx, draw_map, NULL);
         // mlx_loop_hook(map->mlx, move_enemy, map);

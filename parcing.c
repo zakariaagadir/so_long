@@ -1,5 +1,52 @@
 #include "so_long.h"
 
+int closegame(t_map *map)
+{
+    int i;
+
+    i = 0;
+    while (i < 8)
+    {
+        if (map->mlx && map->player_images && map->player_images[i])
+            mlx_destroy_image(map->mlx, map->player_images[i]);
+        i++;
+    }
+    i = 0;
+    while (i < 10)
+    {
+        if (map->mlx && map->Unemy_image && map->Unemy_image[i])
+            mlx_destroy_image(map->mlx, map->Unemy_image[i]);
+        i++;
+    }
+    i = 0;
+    while (i < 8)
+    {
+        if (map->mlx && map->player_images_left && map->player_images_left[i])
+            mlx_destroy_image(map->mlx, map->player_images_left[i]);
+        i++;
+    }
+    // if (map->player_image)
+    //     mlx_destroy_image(map->mlx, map->player_image);
+    if (map->stone_image)
+        mlx_destroy_image(map->mlx, map->stone_image);
+    if (map->coin_image)
+        mlx_destroy_image(map->mlx, map->coin_image);
+    if (map->door_image)
+        mlx_destroy_image(map->mlx, map->door_image);
+    if (map->grass_image)
+        mlx_destroy_image(map->mlx, map->grass_image);
+    if (map->win)
+    {
+        mlx_destroy_window(map->mlx, map->win);
+        mlx_destroy_display(map->mlx);
+        free(map->mlx);
+    }
+    free_map(map);
+    
+    exit(126);
+    return(0);
+}
+
 void message_error_mlx(char *message, t_map *map)
 {
     int i;
@@ -13,17 +60,17 @@ void message_error_mlx(char *message, t_map *map)
         i++;
     }
     i = 0;
-    while (i < 8)
+    while (i < 10)
     {
-        if (map->mlx && map->player_images && map->player_images[i])
-            mlx_destroy_image(map->mlx, map->player_images[i]);
+        if (map->mlx && map->Unemy_image && map->Unemy_image[i])
+            mlx_destroy_image(map->mlx, map->Unemy_image[i]);
         i++;
     }
     i = 0;
-    while (i < 10)
+    while (i < 8)
     {
-        if (map->Unemy_image[i])
-            mlx_destroy_image(map->mlx, map->Unemy_image[i]);
+        if (map->mlx && map->player_images_left && map->player_images_left[i])
+            mlx_destroy_image(map->mlx, map->player_images_left[i]);
         i++;
     }
     // if (map->player_image)
