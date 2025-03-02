@@ -65,6 +65,13 @@ typedef struct s_map
 
 
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
+void    load_Unemy(t_map *map);
+void    load_Playerf(t_map *map);
+int     animate_player(t_map *map);
+void    load_Playerl(t_map *map);
+void    inisialisevoids(t_map *map);
+void    load_textures(t_map *map);
+void    draw_map(t_map *map);
 int     closegame(t_map *map);
 void    parcing(int argc, char **argv);
 size_t	ft_strlen(const char *s);
@@ -76,6 +83,7 @@ void    message_error_parcing(char *message);
 int     validate_map(char **argv, t_map *map);
 char	*ft_strdup(const char *s);
 char	*ft_itoa(int n);
+void    winner(char *message, t_map *map);
 
 
 
