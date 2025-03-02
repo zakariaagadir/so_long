@@ -9,10 +9,14 @@ SRC = main.c ft_strnstr.c ft_strlen.c parcing.c \
 	lib/libft/ft_strdup.c lib/libft/ft_itoa.c \
 	load.c anim.c exit_utils.c chekmap.c readmaputil.c\
 	readmap.c loadutil.c main_functions.c
-SRCB = main_bonus.c ft_strnstr_bonus.c ft_strlen_bonus.c parcing_bonus.c \
-	read_map_bonus.c lib/get_next_line/get_next_line.c \
-	lib/get_next_line/get_next_line_utils.c \
-	lib/libft/ft_strdup.c lib/libft/ft_itoa.c 
+SRCB = anim_bonus.c load_bonus.c read_map_bonus.c\
+	chekmap_bonus.c loadutil_bonus.c readmap_bonus.c\
+	exit_utils_bonus.c main_bonus.c readmaputil_bonus.c\
+	ft_strlen_bonus.c main_functions_bonus.c\
+	ft_strnstr_bonus.c parcing_bonus.c\
+	lib/get_next_line/get_next_line.c \
+	lib/get_next_line/get_next_line_utils.c\
+	lib/libft/ft_strdup.c lib/libft/ft_itoa.c
 OBJ = $(SRC:.c=.o)
 OBJB = $(SRCB:.c=.o)
 
@@ -33,9 +37,9 @@ $(NAME_BONUS): $(OBJB)
 
 
 clean:
-	rm -f $(OBJ)
+	rm -f $(OBJ) $(OBJB)
 
 fclean: clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(NAME_BONUS)
 
 re: fclean all

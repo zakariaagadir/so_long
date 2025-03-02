@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   readmap.c                                          :+:      :+:    :+:   */
+/*   readmap_bonus.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 22:28:13 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 22:24:49 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	is_path_valid(t_map *map)
 {
@@ -53,7 +53,8 @@ void	check_v(t_map *map, int *player_count, \
 				(*exit_count)++;
 			else if (map->full[i][j] == 'C')
 				col_un[0]++;
-			else if (map->full[i][j] != '1' && map->full[i][j] != '0')
+			else if (map->full[i][j] != '1' && map->full[i][j] != '0'
+				&& map->full[i][j] != 'U')
 				message_error("Error: Invalid character in map", map);
 			j++;
 		}
@@ -72,7 +73,7 @@ int	check_valid_chars(t_map *map)
 	col_un[0] = 0;
 	col_un[1] = 0;
 	check_v(map, &player_count, &exit_count, col_un);
-	if (player_count != 1 || exit_count != 1 || col_un[0] < 1)
+	if (player_count != 1 || exit_count != 1 || col_un[0] < 1 || col_un[1] < 1)
 		return (message_error("Error: Map not valid", map), 0);
 	return (1);
 }
