@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 07:41:14 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 10:14:28 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	handl_fun(t_map *map, int *new_y, int *new_x)
 			map->coinnumber--;
 		}
 		if (map->full[map->player.y][map->player.x] == 'E')
-			return (winner("you are win\n", map), 0);
+			return (winner("you win\n", map), 0);
 		if (map->coinnumber == 0)
 			map->full[map->door.y][map->door.x] = 'E';
 	}
@@ -64,14 +64,24 @@ void	handle_movement(t_map *map, int keycode, int *new_y, int *new_x)
 
 int	key_press(int keycode, t_map *map)
 {
-	int	new_x;
-	int	new_y;
+	int		new_x;
+	int		new_y;
+	char	*move_str;
 
 	new_x = map->player.x;
 	new_y = map->player.y;
 	if (keycode == 65307 || keycode == 42)
 		return (message_error_mlx("Esc key \n", map), 0);
 	handle_movement(map, keycode, &new_y, &new_x);
+	if (keycode == 65361 || keycode == 65363
+		|| keycode == 65362 || keycode == 65364)
+	{
+		move_str = ft_itoa(map->moves);
+		write(1, "Mouvements : ", ft_strlen("Mouvements : "));
+		write(1, move_str, ft_strlen(move_str));
+		write(1, "\n", 1);
+		free(move_str);
+	}
 	return (handl_fun(map, &new_y, &new_x));
 }
 
