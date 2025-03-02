@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 22:28:13 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 23:03:21 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ void	check_v(t_map *map, int *player_count, \
 		j = 0;
 		while (map->full[i][j])
 		{
-			if (map->full[i][j] == 'U')
-				col_un[1]++;
-			else if (map->full[i][j] == 'P')
+			if (map->full[i][j] == 'P')
 				(*player_count)++;
 			else if (map->full[i][j] == 'E')
 				(*exit_count)++;

@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 22:26:36 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 23:15:40 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	find_door(t_map *map, int *x, int *y)
 
 void	flood_fill(char **map, int x, int y)
 {
-	if (map[y][x] == '1' || map[y][x] == 'F' || map[y][x] == 'U')
+	if (map[y][x] == '1' || map[y][x] == 'F')
 		return ;
 	map[y][x] = 'F';
 	flood_fill(map, x + 1, y);
