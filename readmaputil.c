@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 05:34:01 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 08:57:30 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	find_player(t_map *map, int *x, int *y)
 	}
 }
 
-void	count_Unemy(t_map *map)
+void	count_unemy(t_map *map)
 {
 	int	i;
 	int	j;
@@ -56,7 +56,7 @@ void	count_Unemy(t_map *map)
 	}
 }
 
-void	find_Unemy(t_map *map, int *x, int *y, int index)
+void	find_unemy(t_map *map, int *x, int *y, int index)
 {
 	int	i;
 	int	j;
@@ -111,9 +111,9 @@ void	find_door(t_map *map, int *x, int *y)
 
 void	flood_fill(char **map, int x, int y)
 {
-	if (map[y][x] == '1' || map[y][x] == 'F')
+	if (map[y][x] == '1' || map[y][x] == 'F' /*|| map[y][x] == 'U'*/)
 		return ;
-	map[y][x] = 'F'; // Mark as visited
+	map[y][x] = 'F';
 	flood_fill(map, x + 1, y);
 	flood_fill(map, x - 1, y);
 	flood_fill(map, x, y + 1);

@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 05:32:32 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 08:09:12 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,11 @@ int	check_path_validity(t_map *map)
 	find_door(map, &map->door.x, &map->door.y);
 	count_coin(map, &map->coinnumber);
 	flood_fill(map_copy->full, map->player.x, map->player.y);
-	count_Unemy(map);
+	count_unemy(map);
 	map->unemy = malloc((map->nbunemy) * sizeof(t_Unemy));
 	while (i < map->nbunemy)
 	{
-		find_Unemy(map, &map->unemy[i].x, &map->unemy[i].y, i);
+		find_unemy(map, &map->unemy[i].x, &map->unemy[i].y, i);
 		i++;
 	}
 	if (!is_path_valid(map_copy))

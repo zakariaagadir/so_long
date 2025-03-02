@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 07:42:15 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 08:09:17 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ int				is_path_valid(t_map *map);
 int				check_valid_chars(t_map *map);
 void			free_map(t_map *map);
 void			find_player(t_map *map, int *x, int *y);
-void			count_Unemy(t_map *map);
-void			find_Unemy(t_map *map, int *x, int *y, int index);
+void			count_unemy(t_map *map);
+void			find_unemy(t_map *map, int *x, int *y, int index);
 void			find_door(t_map *map, int *x, int *y);
 void			flood_fill(char **map, int x, int y);
 void			parcing(int argc, char **argv);
