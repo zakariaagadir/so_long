@@ -6,51 +6,18 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 04:14:34 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 06:30:50 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	load_Unemy(t_map *map)
+void	load_playerf(t_map *map)
 {
 	int	i;
+	int	w;
+	int	h;
 
-	int w, h;
-	i = 0;
-	map->Unemy_image[0] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy1.xpm", &w, &h);
-	map->Unemy_image[1] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy2.xpm", &w, &h);
-	map->Unemy_image[2] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy3.xpm", &w, &h);
-	map->Unemy_image[3] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy4.xpm", &w, &h);
-	map->Unemy_image[4] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy5.xpm", &w, &h);
-	map->Unemy_image[5] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy6.xpm", &w, &h);
-	map->Unemy_image[6] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy7.xpm", &w, &h);
-	map->Unemy_image[7] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy8.xpm", &w, &h);
-	map->Unemy_image[8] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy9.xpm", &w, &h);
-	map->Unemy_image[9] = mlx_xpm_file_to_image(map->mlx,
-			"textures/Unemy/Unemy10.xpm", &w, &h);
-	while (i < 10)
-	{
-		if (!map->Unemy_image[i])
-			message_error_mlx("is it any textur not exist", map);
-		i++;
-	}
-}
-
-void	load_Playerf(t_map *map)
-{
-	int	i;
-
-	int w, h;
 	i = 0;
 	map->player_images[0] = mlx_xpm_file_to_image(map->mlx,
 			"textures/player_move_front/player1.xpm", &w, &h);
@@ -69,18 +36,16 @@ void	load_Playerf(t_map *map)
 	map->player_images[7] = mlx_xpm_file_to_image(map->mlx,
 			"textures/player_move_front/player8.xpm", &w, &h);
 	while (i < 8)
-	{
-		if (!map->player_images[i])
+		if (!map->player_images[i++])
 			message_error_mlx("is it any textur not exist", map);
-		i++;
-	}
 }
 
-void	load_Playerl(t_map *map)
+void	load_playerl(t_map *map)
 {
 	int	i;
+	int	w;
+	int	h;
 
-	int w, h;
 	i = 0;
 	map->player_images_left[0] = mlx_xpm_file_to_image(map->mlx,
 			"textures/move_player_back/player1.xpm", &w, &h);
@@ -99,11 +64,8 @@ void	load_Playerl(t_map *map)
 	map->player_images_left[7] = mlx_xpm_file_to_image(map->mlx,
 			"textures/move_player_back/player8.xpm", &w, &h);
 	while (i < 8)
-	{
-		if (!map->player_images_left[i])
+		if (!map->player_images_left[i++])
 			message_error_mlx("is it any textur not exist", map);
-		i++;
-	}
 }
 
 void	inisialisevoids(t_map *map)
@@ -113,22 +75,37 @@ void	inisialisevoids(t_map *map)
 	i = 0;
 	while (i < 8)
 	{
-		map->player_images[i] = (void *)NULL;
-		map->player_images_left[i] = (void *)NULL;
-		map->Unemy_image[i] = (void *)NULL;
+		map->player_images[i] = (void *) NULL;
+		map->player_images_left[i] = (void *) NULL;
+		map->unemy_image[i] = (void *) NULL;
 		i++;
 	}
-	map->Unemy_image[8] = (void *)NULL;
-	map->Unemy_image[9] = (void *)NULL;
-	map->stone_image = (void *)NULL;
-	map->grass_image = (void *)NULL;
-	map->coin_image = (void *)NULL;
-	map->door_image = (void *)NULL;
+	map->unemy_image[8] = (void *) NULL;
+	map->unemy_image[9] = (void *) NULL;
+	map->stone_image = (void *) NULL;
+	map->grass_image = (void *) NULL;
+	map->coin_image = (void *) NULL;
+	map->door_image = (void *) NULL;
+}
+
+void	loadoter(t_map *map, int w, int h)
+{
+	map->coin_image = mlx_xpm_file_to_image(map->mlx, "textures/coin.xpm", &w,
+			&h);
+	map->door_image = mlx_xpm_file_to_image(map->mlx, "textures/door.xpm", &w,
+			&h);
+	if (!map->door_image || !map->coin_image || !map->grass_image
+		|| !map->stone_image)
+		message_error_mlx("is it any textur not exist", map);
 }
 
 void	load_textures(t_map *map)
 {
-	int w, h;
+	int	w;
+	int	h;
+	int	i;
+
+	i = 0;
 	map->mlx = mlx_init();
 	if (!map->mlx)
 	{
@@ -142,17 +119,11 @@ void	load_textures(t_map *map)
 			"textures/stone_wall02.xpm", &w, &h);
 	map->grass_image = mlx_xpm_file_to_image(map->mlx, "textures/grass.xpm", &w,
 			&h);
-	load_Unemy(map);
-	load_Playerf(map);
-	load_Playerl(map);
+	load_unemy(map, w, h, i);
+	load_playerf(map);
+	load_playerl(map);
 	map->player_image = map->player_images[0];
 	map->current_frame = 0;
 	map->is_moving = 0;
-	map->coin_image = mlx_xpm_file_to_image(map->mlx, "textures/coin.xpm", &w,
-			&h);
-	map->door_image = mlx_xpm_file_to_image(map->mlx, "textures/door.xpm", &w,
-			&h);
-	if (!map->door_image || !map->coin_image || !map->grass_image
-		|| !map->stone_image)
-		message_error_mlx("is it any textur not exist", map);
+	loadoter(map, w, h);
 }

@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 04:14:56 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 07:45:40 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	parcing(int argc, char **argv)
 		message_error_parcing("number of arguments are not correct");
 	i = ft_strlen(argv[1]);
 	if (!ft_strnstr(&argv[1][i - 4], ".ber", 4))
-		message_error_parcing("Map file extention is wrong (It should be .ber)");
+		message_error_parcing("Map file extention is\
+		wrong (It should be .ber)");
 }

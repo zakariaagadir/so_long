@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 04:13:48 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 05:28:43 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	distroy_im(t_map *map, int i)
 	i = 0;
 	while (i < 10)
 	{
-		if (map->mlx && map->Unemy_image && map->Unemy_image[i])
-			mlx_destroy_image(map->mlx, map->Unemy_image[i]);
+		if (map->mlx && map->unemy_image && map->unemy_image[i])
+			mlx_destroy_image(map->mlx, map->unemy_image[i]);
 		i++;
 	}
 	i = 0;
