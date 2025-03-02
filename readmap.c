@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 10:16:01 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/02 10:17:25 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	check_valid_chars(t_map *map)
 	col_un[0] = 0;
 	col_un[1] = 0;
 	check_v(map, &player_count, &exit_count, col_un);
-	if (player_count != 1 || exit_count != 1 || col_un[0] < 1 )
+	if (player_count != 1 || exit_count != 1 || col_un[0] < 1)
 		return (message_error("Error: Map not valid", map), 0);
 	return (1);
 }
