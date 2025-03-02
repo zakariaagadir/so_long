@@ -25,8 +25,6 @@ int closegame(t_map *map)
             mlx_destroy_image(map->mlx, map->player_images_left[i]);
         i++;
     }
-    // if (map->player_image)
-    //     mlx_destroy_image(map->mlx, map->player_image);
     if (map->stone_image)
         mlx_destroy_image(map->mlx, map->stone_image);
     if (map->coin_image)
@@ -42,7 +40,6 @@ int closegame(t_map *map)
         free(map->mlx);
     }
     free_map(map);
-    
     exit(126);
     return(0);
 }
@@ -73,8 +70,6 @@ void message_error_mlx(char *message, t_map *map)
             mlx_destroy_image(map->mlx, map->player_images_left[i]);
         i++;
     }
-    // if (map->player_image)
-    //     mlx_destroy_image(map->mlx, map->player_image);
     if (map->stone_image)
         mlx_destroy_image(map->mlx, map->stone_image);
     if (map->coin_image)
