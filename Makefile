@@ -1,7 +1,7 @@
 NAME = so_long
 NAME_BONUS = so_long_bonus
 CC = cc
-CFLAGS = -Wall -Wextra -Werror # -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror -g
 MLX_FLAGS = -lmlx_Linux -lX11 -lXext
 SRC = main.c ft_strnstr.c ft_strlen.c parcing.c \
 	read_map.c lib/get_next_line/get_next_line.c \

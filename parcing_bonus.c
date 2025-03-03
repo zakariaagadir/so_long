@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 22:19:24 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/03 01:17:27 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 void	message_error(char *message, t_map *map)
 {
 	write(2, message, ft_strlen(message));
+	if (map && map->full && map->full[0])
+		write(2, map->full[0], 1);
 	write(2, "\n", 1);
-	free_map(map);
-	exit(EXIT_FAILURE);
 }
 
 void	message_error_parcing(char *message)
