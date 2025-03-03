@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/03 01:04:36 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/03 02:37:27 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	free_map(t_map *map)
 	while (map->full[i])
 		free(map->full[i++]);
 	free(map->full);
-	free(map->unemy);
+	if (map->unemy)
+		free(map->unemy);
 	free(map);
 }

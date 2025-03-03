@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 22:20:13 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/03 02:35:25 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	read_map(char **argv, t_map *map)
 	}
 	close(fd);
 	read_handler(argv, map);
+	map->unemy = NULL;
 	return (1);
 }
 
