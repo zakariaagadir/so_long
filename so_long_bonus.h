@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 23:43:06 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:34:20 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void			draw_map(t_map *map);
 int				closegame(t_map *map);
 int				is_path_valid(t_map *map);
 int				check_valid_chars(t_map *map);
+void			message_error_un(char *message, t_map *map);
 void			free_map(t_map *map);
 void			find_player(t_map *map, int *x, int *y);
 void			count_unemy(t_map *map);

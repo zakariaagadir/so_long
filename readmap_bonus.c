@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/03 02:37:27 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:41:53 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	check_v(t_map *map, int *player_count, \
 				col_un[0]++;
 			else if (map->full[i][j] != '1' && map->full[i][j] != '0'
 				&& map->full[i][j] != 'U')
-				message_error("Error: Invalid character in map", map);
+				message_error_un("Error: Invalid character in map", map);
 			j++;
 		}
 		i++;
@@ -83,11 +83,12 @@ void	free_map(t_map *map)
 	int	i;
 
 	i = 0;
-	if (!map->full)
-		return ;
-	while (map->full[i])
-		free(map->full[i++]);
-	free(map->full);
+	if (map->full)
+	{
+		while (map->full[i])
+			free(map->full[i++]);
+		free(map->full);
+	}
 	if (map->unemy)
 		free(map->unemy);
 	free(map);

@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 08:09:17 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:27:49 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ size_t			ft_strlen(const char *s);
 int				read_map(char **argv, t_map *map);
 void			free_map(t_map *full);
 void			message_error(char *message, t_map *map);
+void			message_error_un(char *message, t_map *map);
 void			message_error_mlx(char *message, t_map *map);
 void			message_error_parcing(char *message);
 int				validate_map(char **argv, t_map *map);

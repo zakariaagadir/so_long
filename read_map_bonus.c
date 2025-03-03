@@ -6,7 +6,7 @@
 /*   By: zmounji <zmounji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 06:17:27 by zmounji           #+#    #+#             */
-/*   Updated: 2025/03/02 22:19:29 by zmounji          ###   ########.fr       */
+/*   Updated: 2025/03/03 13:16:00 by zmounji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ int	check_path_validity(t_map *map)
 
 int	validate_map(char **argv, t_map *map)
 {
+	map->full = NULL;
+	map->unemy = NULL;
+	inisialisevoids(map);
 	if (!read_map(argv, map))
 		return (0);
 	if (!check_rectangle(map))
